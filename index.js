@@ -5,7 +5,7 @@ var bodyParser = require("body-parser");
 var path = require('path');
 var generator = require('./utils/generator.js');
 var app = express();
-var api_wrapper = require('./utils/api.js');
+var api_wrapper = require('./utils/http_modifier.js');
 
 api_wrapper(app);
 
