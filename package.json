@@ -1,0 +1,19 @@
+{
+  "name": "randomcomic",
+  "version": "1.0.0",
+  "description": "Generates random comics!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonluca/RandomComic.git"
+  },
+  "author": "JonLuca De Caro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonluca/RandomComic/issues"
+  },
+  "homepage": "https://github.com/jonluca/RandomComic#readme"
+}
