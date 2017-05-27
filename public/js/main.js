@@ -10,6 +10,7 @@ $(document).ready(function() {
     getNewImage();
     $('#refresh').click(function() {
         $('#refresh').animateCss('rubberBand');
+        $("#comic").css("display", "none");
         $(".loader").css("display", "block");
         getNewImage();
     });
@@ -18,7 +19,7 @@ $(document).ready(function() {
 
 function getNewImage() {
     $.ajax({
-        method: 'POST',
+        method: 'GET',
         url: "/RandomComic/rand",
         type: 'json',
         success: showNewImage
@@ -26,5 +27,9 @@ function getNewImage() {
 }
 
 function showNewImage(data, code, jqXHR) {
+    $(".loader").css("display", "none");
+    $("#comic").css("display", "initial");
     console.log(data);
+    var img = document.getElementById("comic");
+    img.src = data.img;
 }

@@ -1,26 +1,18 @@
 var xkcd = require('xkcd');
 var request = require('request');
 
-module.exports.getComic = function() {
-    let numComics = 2;
-    let selectedComic = getRandomIntInclusive(0, numComics);
+module.exports.getComic = function(returnRandomComic) {
+    let numComics = 1;
+    let selectedComic = getRandomIntInclusive(1, numComics);
     console.log("Selected comic: " + selectedComic);
     switch (selectedComic) {
         case 1:
-            return getXKCD();
-        case 2:
-            return getXKCD();
-        default:
-            return getXKCD();
+            xkcd(532, function(data) {
+                returnRandomComic(data);
+            });
+            break;
     }
 };
-
-function getXKCD() {
-    // Get a specific xkcd 
-    xkcd(532, function(data) {
-        return data;
-    });
-}
 
 function getCyanideAndHappiness() {
     var url = 'http://explosm.net/comics/random';

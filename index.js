@@ -7,28 +7,21 @@ var generator = require('./utils/generator.js');
 var app = express();
 var api_wrapper = require('./utils/http_modifier.js');
 
-api_wrapper(app);
-
 app.enable('trust proxy');
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+api_wrapper(app);
 
-app.set("view engine", "ejs");
 
 app.use('/RandomComic/', express.static(path.join(__dirname, 'public')));
 
 app.get("/RandomComic/", function(req, res) {
-    var comic = generator.getComic();
-    res.render("landing.ejs", {
-        comic: comic
-    });
+    res.render("landing.ejs");
 });
 
 app.get("/RandomComic/rand", function(req, res) {
-    var comic = generator.getComic();
-    res.send(comic);
-    res.send(200);
-    res.end();
+    var comic = generator.getComic(function(comic) {
+        console.log(comic);
+        res.send(comic);
+        res.end();
+    });
 });
