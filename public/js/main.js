@@ -1,7 +1,17 @@
+$.fn.extend({
+    animateCss: function(animationName) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+        });
+    }
+});
 $(document).ready(function() {
 
     $('#refresh').click(function() {
-        alert("clicked");
+        $('#refresh').animateCss('rubberBand');
+
+        $(".loader").css("display", "block");
     });
 
 });

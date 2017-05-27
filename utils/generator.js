@@ -24,10 +24,12 @@ function getXKCD() {
 
 function getCyanideAndHappiness() {
     var url = 'http://explosm.net/comics/random';
+
     request({
         url: url,
         followRedirect: false
     }, function(err, res, body) {
+        //gives us the URL of the random comic
         console.log(res.headers.location);
     });
 }
