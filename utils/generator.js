@@ -1,4 +1,5 @@
 var xkcd = require('xkcd');
+var request = require('request');
 
 module.exports.getComic = function() {
     let numComics = 2;
@@ -22,9 +23,12 @@ function getXKCD() {
 }
 
 function getCyanideAndHappiness() {
-    // Get a specific xkcd 
-    xkcd(532, function(data) {
-        return data;
+    var url = 'http://explosm.net/comics/random';
+    request({
+        url: url,
+        followRedirect: false
+    }, function(err, res, body) {
+        console.log(res.headers.location);
     });
 }
 
