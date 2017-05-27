@@ -5,6 +5,9 @@ var bodyParser = require("body-parser");
 var path = require('path');
 var generator = require('./utils/generator.js');
 var app = express();
+var api_wrapper = require('./utils/api.js');
+
+api_wrapper(app);
 
 app.enable('trust proxy');
 
@@ -23,6 +26,3 @@ app.get("/RandomComic/", function(req, res) {
     });
 });
 
-app.listen(8070, 'localhost', function() {
-    console.log("Listening on port 8070");
-});
