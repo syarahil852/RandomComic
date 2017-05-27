@@ -9,7 +9,7 @@ module.exports.getComic = function() {
         case 1:
             return getXKCD();
         case 2:
-            return getCyanideAndHappiness();
+            return getXKCD();
         default:
             return getXKCD();
     }

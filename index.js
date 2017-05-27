@@ -26,3 +26,9 @@ app.get("/RandomComic/", function(req, res) {
     });
 });
 
+app.get("/RandomComic/rand", function(req, res) {
+    var comic = generator.getComic();
+    res.send(comic);
+    res.send(200);
+    res.end();
+});

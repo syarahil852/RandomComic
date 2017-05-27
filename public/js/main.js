@@ -7,11 +7,24 @@ $.fn.extend({
     }
 });
 $(document).ready(function() {
-
+    getNewImage();
     $('#refresh').click(function() {
         $('#refresh').animateCss('rubberBand');
-
         $(".loader").css("display", "block");
+        getNewImage();
     });
 
 });
+
+function getNewImage() {
+    $.ajax({
+        method: 'POST',
+        url: "/RandomComic/rand",
+        type: 'json',
+        success: showNewImage
+    });
+}
+
+function showNewImage(data, code, jqXHR) {
+    console.log(data);
+}
