@@ -17,9 +17,8 @@ $(document).ready(function() {
     if (checks != "") {
         checkArray = checks.split(',');
         console.log(checkArray);
-
         for (var i = 0; i < checkArray.length; i++) {
-            if (checkArray[i] == "0") {
+            if (checkArray[i] == "0" && $('input.comic-check').length > i) {
                 var checkBox = $('input.comic-check')[i];
                 $(checkBox).prop('checked', false);
             }
