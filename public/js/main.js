@@ -36,7 +36,14 @@ function getNewImage() {
     resetView();
     $('#refresh').animateCss('rubberBand');
     $(".loader").css("display", "block");
-    saveCookies();
+    var checkArray = [];
+    $('input.comic-check').each(function() {
+        if ($(this).is(':checked')) {
+            checkArray.push(1);
+        } else {
+            checkArray.push(0);
+        }
+    });
     $.ajax({
         method: 'POST',
         url: "/RandomComic/rand",
