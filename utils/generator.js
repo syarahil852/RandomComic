@@ -1,5 +1,7 @@
 var xkcd = require('xkcd');
 var request = require('request');
+const cheerio = require('cheerio');
+
 //fall back in case bottom fails
 var latestComicNum = 1842;
 
@@ -10,8 +12,8 @@ xkcd(function(data) {
     }
 });
 module.exports.getComic = function(returnRandomComic) {
-    let numComics = 1;
-    let selectedComic = getRandomIntInclusive(1, numComics);
+    let numComics = 2;
+    let selectedComic = getRandomIntInclusive(2, numComics);
     var comicObject = {};
     switch (selectedComic) {
         case 1:
@@ -21,25 +23,33 @@ module.exports.getComic = function(returnRandomComic) {
             xkcd(selectedXKCD, function(data) {
                 comicObject.img = data.img;
                 comicObject.title = data.safe_title;
+                comicObject.alt = data.alt;
                 returnRandomComic(comicObject);
             });
-
             break;
         case 2:
             comicObject.publisher = "Cyanide & Happiness";
             comicObject.publisherUrl = "https://explosm.net/";
+            getCyanideAndHappiness(function(url, title) {
+                comicObject.img = url;
+                comicObject.title = title;
+                returnRandomComic(comicObject);
+            });
+            break;
     }
 };
 
-function getCyanideAndHappiness() {
+function getCyanideAndHappiness(returnComic) {
     var url = 'http://explosm.net/comics/random';
 
     request({
-        url: url,
-        followRedirect: false
+        url: url
     }, function(err, res, body) {
-        //gives us the URL of the random comic
-        console.log(res.headers.location);
+        const $ = cheerio.load(body);
+        let url = $("#main-comic").attr('src');
+        console.log(url);
+        let title = $(".author-credit-name").text();
+        returnComic(url, title);
     });
 }
 
