@@ -6,6 +6,14 @@ A simple node app to serve up a random comic from one of the following sourcesf
 
 * Cyanide and Happiness
 
+* Dilbert
+
+* SMBC
+
+* Penny Arcade
+
+* Abstruse Goose
+
 ## Contributing
 
 Contributions are always welcome! Familiarize yourself with the source code first, especially `generator.js`. 
