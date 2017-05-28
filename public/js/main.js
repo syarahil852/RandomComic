@@ -58,6 +58,7 @@ function showNewImage(data, code, jqXHR) {
 
 function resetView() {
     $("#comic").css("display", "none");
+    $("#comic").attr("title", "");
     $("#publisher").html("");
     $("#info").text("Random Comics");
     $("#title").text("");
