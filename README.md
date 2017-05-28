@@ -14,10 +14,10 @@ The format of the comic delivered to the front end is a JSON object with the fol
 
 | Field  | About | Required |
 | ------------- | ------------- | :-: | 
-| img | Direct URL to the comic image | ✔ |
-| publisherUrl  | Original URL of the comic  | ✔ |
-| publisher | The name of the comic strip | ✔ |
-| title | Title of the specific comic comic | ✔ |
+| img | Direct URL to the comic image | ✓ |
+| publisherUrl  | Original URL of the comic  | ✓ |
+| publisher | The name of the comic strip | ✓ |
+| title | Title of the specific comic comic | ✓ |
 | alt | Hover text if the comic supports it | |
 
 
