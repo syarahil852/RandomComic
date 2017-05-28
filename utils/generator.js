@@ -90,7 +90,7 @@ function getCyanideAndHappiness(returnComic) {
         url: url
     }, function(err, res, body) {
         if (debug) {
-            console.log(url);
+            console.log(res.request.uri.href);
         }
         const $ = cheerio.load(body);
         let comicUrl = $("#main-comic").attr('src');
@@ -119,12 +119,13 @@ function getDilbert(returnComic) {
         testDate = new Date(dateString);
     }
     var url = 'http://dilbert.com/strip/' + dateString;
-    if (debug) {
-        console.log(url);
-    }
+
     request({
         url: url
     }, function(err, res, body) {
+        if (debug) {
+            console.log(res.request.uri.href);
+        }
         const $ = cheerio.load(body);
         let comic = $("img.img-comic");
         let comicUrl = $(comic).attr('src');
@@ -145,7 +146,7 @@ function getSMBC(returnComic) {
         url: url
     }, function(err, res, body) {
         if (debug) {
-            console.log(url);
+            console.log(res.request.uri.href);
         }
         const $ = cheerio.load(body);
         let comicUrl = $("#cc-comic").attr('src');
@@ -179,7 +180,7 @@ function getPennyArcade(returnComic) {
         url: url
     }, function(err, res, body) {
         if (debug) {
-            console.log(url);
+            console.log(res.request.uri.href);
         }
         const $ = cheerio.load(body);
         let comic = $("#comicFrame > a > img");
@@ -201,7 +202,7 @@ function getAbstruseGoose(returnComic) {
         url: url
     }, function(err, res, body) {
         if (debug) {
-            console.log(url);
+            console.log(res.request.uri.href);
         }
         const $ = cheerio.load(body);
         let comicUrl = $("body > section > img").attr('src');
