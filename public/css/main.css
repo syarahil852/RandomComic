@@ -50,7 +50,10 @@ h3 {
 	cursor: pointer;
 }
 .footerp {
-	display: inline;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
 }
 
 /*About sidenav*/
