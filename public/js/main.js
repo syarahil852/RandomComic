@@ -12,14 +12,14 @@ $(document).ready(function() {
     $(".loader").css("display", "block");
     getNewImage();
     $('#refresh').click(function() {
-        resetView();
-        $('#refresh').animateCss('rubberBand');
-        $(".loader").css("display", "block");
         getNewImage();
     });
 });
 
 function getNewImage() {
+    resetView();
+    $('#refresh').animateCss('rubberBand');
+    $(".loader").css("display", "block");
     $.ajax({
         method: 'GET',
         url: "/RandomComic/rand",
@@ -74,3 +74,11 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.body.style.backgroundColor = "white";
 }
+
+//Refresh page on R
+window.onkeyup = function(e) {
+    var key = e.keyCode ? e.keyCode : e.which;
+    if (key == 82) {
+        getNewImage();
+    }
+};
