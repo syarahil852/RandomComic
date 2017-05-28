@@ -2,7 +2,7 @@
 
 A simple node app to serve up a random comic from one of the following sourcesf
 
-* XKCD
+* xkcd
 
 * Cyanide and Happiness
 
