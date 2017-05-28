@@ -37,6 +37,10 @@ a:hover {
 	font-size: 300%;
 	cursor: pointer;
 }
+
+#comic-list {
+	color: white;
+}
 img {
 	max-width: 100%;
 }
