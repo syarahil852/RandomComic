@@ -1,4 +1,4 @@
-# RandomComic
+#RandomComic
 
 A simple node app to serve up a random comic from one of the following sourcesf
 
@@ -6,7 +6,7 @@ A simple node app to serve up a random comic from one of the following sourcesf
 
 * Cyanide and Happiness
 
-## Contributing
+##Contributing
 
 Contributions are always welcome! Familiarize yourself with the source code first, especially `generator.js`. 
 
