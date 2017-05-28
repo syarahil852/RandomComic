@@ -6,9 +6,8 @@ html {
 body {
 	font-family: 'Raleway', sans-serif;
 	background: #000428;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+	background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 	position: relative;
 	min-height: 98%;
 	flex: 1;
@@ -41,20 +40,56 @@ a:hover {
 img {
 	max-width: 100%;
 }
-h3{
+h3 {
+	color: white;
+}
+.i {
+	display: inline;
+	float: left;
+	margin-left: 20px;
+	cursor: pointer;
+}
+.footerp {
+	display: inline;
+}
+
+/*About sidenav*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: #004484;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    text-decoration: none;
+    color: #818181;
+    transition: 0.3s;
+}
+
+.sidenav p{
+	margin: 15px;
 	color: white;
 }
 
-.i{
-	display: inline;
-	float: right;
-	margin-right: 10px;
-	font-size: 300%;
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
 }
 
-.footerp{
-	display: inline;
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
+
 /*CSS Spinner */
 .loader, .loader:before, .loader:after {
 	border-radius: 50%;

@@ -21,6 +21,14 @@
 		<link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/animate.css">
 	</head>
+	
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<div>
+		<p>Built by JonLuca DeCaro. Free and open source, on <a href="https://github.com/jonluca/RandomComic">GitHub</a></p>
+		<p>Owner of one of the comics and would like it removed from the Random Comic Generator? Email me at <a href="mailto:jdecaro@usc.edu">jdecaro@usc.edu</a> or open a GitHub issue!</p>
+		</div>
+	</div>
 	<div class="container text-center">
 		<h1 class="text-center" id="info">Random Comic Generator</h1>
 		<img class="text-center" id="comic">
@@ -34,7 +42,7 @@
 	</div>
 	<footer class="text-center" id="footer">
 		<p class="footerp">&copy; 2017 JonLuca De Caro</p>
-		<i class="fa fa-info i" title="test" aria-hidden="true"></i>
+		<h6 class="fa fa-info i" title="About" onclick="openNav()"></h6>
 	</footer>
 	<script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
