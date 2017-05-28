@@ -1,3 +1,4 @@
+//extension to jQuery for animate.css
 $.fn.extend({
     animateCss: function(animationName) {
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -49,7 +50,6 @@ function showNewImage(data, code, jqXHR) {
         if (data.hasOwnProperty('alt')) {
             img.title = data.alt;
         }
-
     } else {
         $(".loader").css("display", "none");
         $("#info").text("Error! Please try again.");
