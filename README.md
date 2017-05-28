@@ -1,4 +1,4 @@
-# RandomComic
+# RandomComics
 
 A simple node app to serve up a random comic from one of the following sourcesf
 
@@ -13,6 +13,9 @@ A simple node app to serve up a random comic from one of the following sourcesf
 * Penny Arcade
 
 * Abstruse Goose
+
+<img src='http://i.imgur.com/6obDxmy.png' title='Random Comics' width='800'/>
+
 
 ## Contributing
 
