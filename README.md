@@ -19,3 +19,8 @@ The format of the comic delivered to the front end is a JSON object with the fol
 | publisher | The name of the comic strip | ✔ |
 | title | Title of the specific comic comic | ✔ |
 | alt | Hover text if the comic supports it | |
+
+
+## Complaints/Concerns
+
+If you are one of the comic strip creators and would like your comic *not* included in RandomComic, then please leave a github issue or contact me through email and it will be removed.
