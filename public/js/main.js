@@ -16,7 +16,8 @@ $(document).ready(function() {
     var checks = getCookie("checks");
     if (checks != "") {
         checkArray = checks.split(',');
-        console.log(checkArray);
+        //unchecks boxes based on cookies
+        //also has backwards compatability provided we only append to the list in landing.ejs/generator.js
         for (var i = 0; i < checkArray.length; i++) {
             if (checkArray[i] == "0" && $('input.comic-check').length > i) {
                 var checkBox = $('input.comic-check')[i];
