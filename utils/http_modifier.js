@@ -1,7 +1,6 @@
 var helmet = require('helmet');
 var bodyParser = require("body-parser");
 
-
 module.exports = function(app) {
     app.use(helmet());
     app.use(bodyParser.urlencoded({

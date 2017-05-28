@@ -8,6 +8,7 @@ $.fn.extend({
 });
 
 $(document).ready(function() {
+    $(".loader").css("display", "block");
     getNewImage();
     $('#refresh').click(function() {
         resetView();
@@ -23,12 +24,15 @@ function getNewImage() {
         method: 'GET',
         url: "/RandomComic/rand",
         type: 'json',
-        success: showNewImage
+        success: showNewImage,
+        error: function(data, code, jqXHR) {
+            $(".loader").css("display", "none");
+            $("#info").text("Error! Please try again.");
+        }
     });
 }
 
 function showNewImage(data, code, jqXHR) {
-    console.log(data);
     if (code === 'success' && jqXHR.status == 200 && data.hasOwnProperty('img')) {
         var img = document.getElementById("comic");
         img.src = data.img;
@@ -49,12 +53,13 @@ function showNewImage(data, code, jqXHR) {
 
     } else {
         $(".loader").css("display", "none");
-        $("#publisher").html("Error! Please try again.");
+        $("#info").text("Error! Please try again.");
     }
 }
 
 function resetView() {
     $("#comic").css("display", "none");
     $("#publisher").html("");
+    $("#info").text("Random Comic Generator");
     $("#title").text("");
 }
