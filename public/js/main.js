@@ -9,6 +9,22 @@ $.fn.extend({
 });
 
 $(document).ready(function() {
+    //Cookie for what comics they'd like to see
+    $('input:checkbox').change(function() {
+        saveCookies();
+    });
+    var checks = getCookie("checks");
+    if (checks != "") {
+        checkArray = checks.split(',');
+        console.log(checkArray);
+
+        for (var i = 0; i < checkArray.length; i++) {
+            if (checkArray[i] == "0") {
+                var checkBox = $('input.comic-check')[i];
+                $(checkBox).prop('checked', false);
+            }
+        }
+    }
     $(".loader").css("display", "block");
     getNewImage();
     $('#refresh').click(function() {
@@ -20,10 +36,14 @@ function getNewImage() {
     resetView();
     $('#refresh').animateCss('rubberBand');
     $(".loader").css("display", "block");
+    saveCookies();
     $.ajax({
-        method: 'GET',
+        method: 'POST',
         url: "/RandomComic/rand",
         type: 'json',
+        data: {
+            checked: checkArray
+        },
         success: showNewImage,
         error: function(data, code, jqXHR) {
             $(".loader").css("display", "none");
@@ -74,6 +94,34 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.body.style.backgroundColor = "white";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function saveCookies() {
+    var checkArray = [];
+    $('input.comic-check').each(function() {
+        if ($(this).is(':checked')) {
+            checkArray.push(1);
+        } else {
+            checkArray.push(0);
+        }
+    });
+    document.cookie = "checks=" + checkArray;
 }
 
 //Refresh page on R

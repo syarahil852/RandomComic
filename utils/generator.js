@@ -11,9 +11,23 @@ var latestComicAbstruse = 575;
 //Commented for now so that nodemon doesn't run it every 5 seconds
 generateInitNums();
 
-module.exports.getComic = function(returnRandomComic) {
+module.exports.getComic = function(comicsToSelectFrom, returnRandomComic) {
     let numComics = 6;
-    let selectedComic = getRandomIntInclusive(1, numComics);
+    var selectedComic = getRandomIntInclusive(1, numComics);
+    var all_zero = true;
+    if (comicsToSelectFrom != undefined) {
+        for (var i = 0; i < comicsToSelectFrom.length; i++) {
+            if (comicsToSelectFrom[i] == 1) {
+                all_zero = false;
+                break;
+            }
+        }
+        if (!all_zero) {
+            while (comicsToSelectFrom[selectedComic - 1] == 0) {
+                selectedComic = getRandomIntInclusive(1, numComics);
+            }
+        }
+    }
     var comicObject = {};
     switch (selectedComic) {
         case 1:
