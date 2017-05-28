@@ -6,11 +6,12 @@ $.fn.extend({
         });
     }
 });
+
 $(document).ready(function() {
     getNewImage();
     $('#refresh').click(function() {
+        resetView();
         $('#refresh').animateCss('rubberBand');
-        $("#comic").css("display", "none");
         $(".loader").css("display", "block");
         getNewImage();
     });
@@ -27,9 +28,22 @@ function getNewImage() {
 }
 
 function showNewImage(data, code, jqXHR) {
-    $(".loader").css("display", "none");
-    $("#comic").css("display", "initial");
-    console.log(data);
-    var img = document.getElementById("comic");
-    img.src = data.img;
+    if (code === 'success' && jqXHR.status == 200) {
+        var img = document.getElementById("comic");
+        img.src = data.img;
+        $(".loader").css("display", "none");
+        $("#comic").css("display", "initial");
+        $("#publisher").html("<a href=\"" + data.publisherUrl + "\">" + data.publisher + "</a>");
+        $("#title").text(data.title);
+    } else {
+        $(".loader").css("display", "none");
+        $("#publisher").html("Error! Please try again.");
+    }
+
+}
+
+function resetView() {
+    $("#comic").css("display", "none");
+    $("#publisher").html("");
+    $("#title").text("");
 }

@@ -1,16 +1,33 @@
 var xkcd = require('xkcd');
 var request = require('request');
+//fall back in case bottom fails
+var latestComicNum = 1842;
 
+//Sets most recent XKCD on init run
+xkcd(function(data) {
+    if (data) {
+        latestComicNum = data.num;
+    }
+});
 module.exports.getComic = function(returnRandomComic) {
     let numComics = 1;
     let selectedComic = getRandomIntInclusive(1, numComics);
-    console.log("Selected comic: " + selectedComic);
+    var comicObject = {};
     switch (selectedComic) {
         case 1:
-            xkcd(532, function(data) {
-                returnRandomComic(data);
+            comicObject.publisher = "xkcd";
+            comicObject.publisherUrl = "https://xkcd.com/";
+            let selectedXKCD = getRandomIntInclusive(1, latestComicNum);
+            xkcd(selectedXKCD, function(data) {
+                comicObject.img = data.img;
+                comicObject.title = data.safe_title;
+                returnRandomComic(comicObject);
             });
+
             break;
+        case 2:
+            comicObject.publisher = "Cyanide & Happiness";
+            comicObject.publisherUrl = "https://explosm.net/";
     }
 };
 
