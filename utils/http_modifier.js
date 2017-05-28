@@ -1,12 +1,19 @@
 var helmet = require('helmet');
 var bodyParser = require("body-parser");
-// logging
-var dateFormat = require('dateformat');
-require('log-timestamp')(function() {
-    return '[' + dateFormat("m/d/yy HH:MM:ss Z") + '] %s';
+var path = require('path');
+var morgan = require('morgan');
+
+var fs = require('fs');
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
+    flags: 'a'
 });
+
+
 module.exports = function(app) {
     app.use(helmet());
+    app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
+        stream: accessLogStream
+    }));
     app.use(bodyParser.urlencoded({
         extended: true
     }));
