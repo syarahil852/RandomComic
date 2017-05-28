@@ -13,9 +13,9 @@ Contributions are always welcome! Familiarize yourself with the source code firs
 The format of the comic delivered to the front end is a JSON object with the following properties:
 
 | Field  | About | Required |
-| ------------- | ------------- | - | 
-| img | Direct url to the comic | x |
-| publisherUrl  | Original url of the comic  | x |
+| ------------- | ------------- | :-: | 
+| img | Direct URL to the comic image | x |
+| publisherUrl  | Original URL of the comic  | x |
 | publisher | The name of the comic strip | x |
 | title | Title of the specific comic comic | x |
-| alt | Alt text if the comic supports it | |
+| alt | Hover text if the comic supports it | |
