@@ -44,6 +44,11 @@ a:hover {
 	cursor: pointer;
 }
 
+img{
+	width: 100%;
+	height: auto;
+}
+
 /*CSS Spinner */
 .loader,
 .loader:before,
