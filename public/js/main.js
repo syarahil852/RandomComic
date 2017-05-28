@@ -59,7 +59,7 @@ function showNewImage(data, code, jqXHR) {
 function resetView() {
     $("#comic").css("display", "none");
     $("#publisher").html("");
-    $("#info").text("Random Comic Generator");
+    $("#info").text("Random Comics");
     $("#title").text("");
 }
 
