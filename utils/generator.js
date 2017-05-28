@@ -31,6 +31,8 @@ function generateInitNums() {
     });
 }
 
+//Redefinitions
+
 //To check for valid random dates
 Date.prototype.isValid = function() {
     // An invalid date object returns NaN for getTime() and NaN is the only
@@ -38,9 +40,13 @@ Date.prototype.isValid = function() {
     return this.getTime() === this.getTime();
 };
 
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 module.exports.getComic = function(returnRandomComic) {
     let numComics = 6;
-    let selectedComic = getRandomIntInclusive(1, numComics);
+    let selectedComic = getRandomIntInclusive(2, 2);
     var comicObject = {};
     switch (selectedComic) {
         case 1:
@@ -58,6 +64,7 @@ module.exports.getComic = function(returnRandomComic) {
             comicObject.publisher = "Cyanide & Happiness";
             getCyanideAndHappiness(function(url, title, origUrl) {
                 comicObject.img = url;
+                title = title.capitalize();
                 comicObject.title = title;
                 comicObject.publisherUrl = origUrl;
                 returnRandomComic(comicObject);
