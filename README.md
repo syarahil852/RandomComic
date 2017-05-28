@@ -1,6 +1,6 @@
 # RandomComics
 
-A simple node app to serve up a random comic from one of the following sourcesf
+A simple node app to serve up a random comic from one of the following sources:
 
 * xkcd
 
