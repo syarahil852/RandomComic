@@ -3,14 +3,33 @@ var request = require('request');
 const cheerio = require('cheerio');
 const debug = true;
 //fall back in case most recent check fails. This is the xkcd on 5/28/17
-var latestComicNum = 1842;
+var latestComicNumXkcd = 1842;
+var latestComicAbstruse = 575;
 
-//Sets most recent XKCD on init run
-xkcd(function(data) {
-    if (data) {
-        latestComicNum = data.num;
-    }
-});
+
+//Sets the most recent comic indices for some comic sites. 
+//Commented for now so that nodemon doesn't run it every 5 seconds
+//generateInitNums();
+function generateInitNums() {
+    //Sets most recent XKCD on init run
+    xkcd(function(data) {
+        if (data) {
+            latestComicNumXkcd = data.num;
+        }
+    });
+
+
+    var abstruseurl = 'http://abstrusegoose.com/';
+
+    request({
+        url: abstruseurl
+    }, function(err, res, body) {
+        const $ = cheerio.load(body);
+        let title = $("body > section > h1 > a").attr('href');
+        var parse_title = title.split('/');
+        latestComicAbstruse = parseInt(parse_title[3]);
+    });
+}
 
 //To check for valid random dates
 Date.prototype.isValid = function() {
@@ -20,13 +39,13 @@ Date.prototype.isValid = function() {
 };
 
 module.exports.getComic = function(returnRandomComic) {
-    let numComics = 5;
-    let selectedComic = getRandomIntInclusive(5, numComics);
+    let numComics = 6;
+    let selectedComic = getRandomIntInclusive(1, numComics);
     var comicObject = {};
     switch (selectedComic) {
         case 1:
             comicObject.publisher = "xkcd";
-            let selectedXKCD = getRandomIntInclusive(1, latestComicNum);
+            let selectedXKCD = getRandomIntInclusive(1, latestComicNumXkcd);
             xkcd(selectedXKCD, function(data) {
                 comicObject.publisherUrl = "https://xkcd.com/" + selectedXKCD;
                 comicObject.img = data.img;
@@ -55,6 +74,7 @@ module.exports.getComic = function(returnRandomComic) {
                 comicObject.publisherUrl = origUrl;
                 returnRandomComic(comicObject);
             });
+            break;
         case 4:
             comicObject.publisher = "SMBC";
             getSMBC(function(url, title, origUrl) {
@@ -63,6 +83,7 @@ module.exports.getComic = function(returnRandomComic) {
                 comicObject.publisherUrl = origUrl;
                 returnRandomComic(comicObject);
             });
+            break;
         case 5:
             comicObject.publisher = "Penny Arcade";
             getPennyArcade(function(url, title, origUrl) {
@@ -71,6 +92,19 @@ module.exports.getComic = function(returnRandomComic) {
                 comicObject.publisherUrl = origUrl;
                 returnRandomComic(comicObject);
             });
+            break;
+        case 6:
+            comicObject.publisher = "Abstruse Goose";
+            getAbstruseGoose(function(url, title, origUrl, alt) {
+                comicObject.img = url;
+                comicObject.title = title;
+                comicObject.publisherUrl = origUrl;
+                if (alt != undefined && alt != "") {
+                    comicObject.alt = alt;
+                }
+                returnRandomComic(comicObject);
+            });
+            break;
     }
 };
 
@@ -178,6 +212,28 @@ function getPennyArcade(returnComic) {
             return;
         }
         returnComic(comicUrl, title, url);
+    });
+}
+
+function getAbstruseGoose(returnComic) {
+    var randomComic = getRandomIntInclusive(1, 572);
+    var url = 'http://abstrusegoose.com/' + randomComic;
+
+    request({
+        url: url
+    }, function(err, res, body) {
+        if (debug) {
+            console.log(url);
+        }
+        const $ = cheerio.load(body);
+        let comicUrl = $("body > section > img").attr('src');
+        let title = $("body > section > h1 > a").text();
+        if (comicUrl == undefined) {
+            getAbstruseGoose(returnComic);
+            return;
+        }
+        let alt = $("body > section > img").attr('title');
+        returnComic(comicUrl, title, res.request.uri.href, alt);
     });
 }
 
