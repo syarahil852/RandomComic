@@ -25,7 +25,6 @@ app.get("/RandomComic/", function(req, res) {
 
 //Returns a JSON object containing the title, img url, original comic URL, and name of the comic
 app.post("/RandomComic/rand", function(req, res) {
-    console.log(req.body);
     var comic = generator.getComic(req.body.checked, function(comic) {
         res.send(comic);
         res.end();
