@@ -46,7 +46,7 @@ String.prototype.capitalize = function() {
 
 module.exports.getComic = function(returnRandomComic) {
     let numComics = 6;
-    let selectedComic = getRandomIntInclusive(2, 2);
+    let selectedComic = getRandomIntInclusive(1, numComics);
     var comicObject = {};
     switch (selectedComic) {
         case 1:
