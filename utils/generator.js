@@ -9,40 +9,7 @@ var latestComicAbstruse = 575;
 
 //Sets the most recent comic indices for some comic sites. 
 //Commented for now so that nodemon doesn't run it every 5 seconds
-//generateInitNums();
-function generateInitNums() {
-    //Sets most recent XKCD on init run
-    xkcd(function(data) {
-        if (data) {
-            latestComicNumXkcd = data.num;
-        }
-    });
-
-
-    var abstruseurl = 'http://abstrusegoose.com/';
-
-    request({
-        url: abstruseurl
-    }, function(err, res, body) {
-        const $ = cheerio.load(body);
-        let title = $("body > section > h1 > a").attr('href');
-        var parse_title = title.split('/');
-        latestComicAbstruse = parseInt(parse_title[3]);
-    });
-}
-
-//Redefinitions
-
-//To check for valid random dates
-Date.prototype.isValid = function() {
-    // An invalid date object returns NaN for getTime() and NaN is the only
-    // object not strictly equal to itself.
-    return this.getTime() === this.getTime();
-};
-
-String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-};
+generateInitNums();
 
 module.exports.getComic = function(returnRandomComic) {
     let numComics = 6;
@@ -52,6 +19,7 @@ module.exports.getComic = function(returnRandomComic) {
         case 1:
             comicObject.publisher = "xkcd";
             let selectedXKCD = getRandomIntInclusive(1, latestComicNumXkcd);
+            //No dediated xkcd because there is a wrapper already
             xkcd(selectedXKCD, function(data) {
                 comicObject.publisherUrl = "https://xkcd.com/" + selectedXKCD;
                 comicObject.img = data.img;
@@ -106,6 +74,7 @@ module.exports.getComic = function(returnRandomComic) {
                 comicObject.img = url;
                 comicObject.title = title;
                 comicObject.publisherUrl = origUrl;
+                //Alt text is sometimes there - if it exists, set it on the object
                 if (alt != undefined && alt != "") {
                     comicObject.alt = alt;
                 }
@@ -117,7 +86,6 @@ module.exports.getComic = function(returnRandomComic) {
 
 function getCyanideAndHappiness(returnComic) {
     var url = 'http://explosm.net/comics/random';
-
     request({
         url: url
     }, function(err, res, body) {
@@ -132,14 +100,16 @@ function getCyanideAndHappiness(returnComic) {
 }
 
 function getDilbert(returnComic) {
-    //generate random date, from 1989
+    //generate random date, from 1989 (very first dilbert comic)
+    //Additionally, dilbert automatically shows the first comic if you choose one from BEFORE that date
+    //So no additional verification is needed
     var now = new Date();
     var year = getRandomIntInclusive(1989, now.getFullYear());
     var month = getRandomIntInclusive(1, 12);
     var day = getRandomIntInclusive(1, 31);
     var dateString = year + '-' + month + '-' + day;
     var testDate = new Date(dateString);
-    //If it's a valid date OR if it's in the future
+    //If it's not a valid date OR if it's in the future, get a new random date
     while (!testDate.isValid() || testDate > now) {
         year = getRandomIntInclusive(1989, now.getFullYear());
         month = getRandomIntInclusive(1, 12);
@@ -159,6 +129,7 @@ function getDilbert(returnComic) {
         let comic = $("img.img-comic");
         let comicUrl = $(comic).attr('src');
         let title = $(comic).attr('alt');
+        //If still undefined for some reason, try all this again
         if (comic == undefined) {
             getDilbert(returnComic);
             return;
@@ -194,7 +165,7 @@ function getPennyArcade(returnComic) {
     var day = getRandomIntInclusive(1, 31);
     var dateString = year + '/' + month + '/' + day;
     var testDate = new Date(dateString);
-    //If it's a valid date OR if it's in the future OR if it's a weekend
+    //If it's not a valid date OR if it's in the future OR if it's a weekend
     while (!testDate.isValid() || testDate > now || testDate.getDay() == 0 || testDate.getDay() == 6) {
         year = getRandomIntInclusive(1999, now.getFullYear());
         month = getRandomIntInclusive(1, 12);
@@ -244,8 +215,46 @@ function getAbstruseGoose(returnComic) {
     });
 }
 
+//Helpers
+
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function generateInitNums() {
+    //Sets most recent XKCD on init
+    xkcd(function(data) {
+        if (data) {
+            latestComicNumXkcd = data.num;
+        }
+    });
+    //Sets most recent AbstruseGoose on init
+    var abstruseurl = 'http://abstrusegoose.com/';
+    request({
+        url: abstruseurl
+    }, function(err, res, body) {
+        const $ = cheerio.load(body);
+        let title = $("body > section > h1 > a").attr('href');
+        var parse_title = title.split('/');
+        latestComicAbstruse = parseInt(parse_title[3]);
+    });
+}
+
+//Redefinitions
+
+//To check for valid random dates
+Date.prototype.isValid = function() {
+    // An invalid date object returns NaN for getTime() and NaN is the only
+    // object not strictly equal to itself.
+    return this.getTime() === this.getTime();
+};
+
+//To capitalize the first letter in a string
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+
+
