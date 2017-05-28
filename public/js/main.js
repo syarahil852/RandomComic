@@ -28,20 +28,25 @@ function getNewImage() {
 }
 
 function showNewImage(data, code, jqXHR) {
+    console.log(data);
     if (code === 'success' && jqXHR.status == 200 && data.hasOwnProperty('img')) {
         var img = document.getElementById("comic");
         img.src = data.img;
         $(".loader").css("display", "none");
         $("#comic").css("display", "initial");
+
         if (data.hasOwnProperty('publisherUrl') && data.hasOwnProperty('publisher')) {
             $("#publisher").html("<a href=\"" + data.publisherUrl + "\">" + data.publisher + "</a>");
         }
+
         if (data.hasOwnProperty('title')) {
             $("#title").text(data.title);
         }
+
         if (data.hasOwnProperty('alt')) {
-            $("#title").text(data.title);
+            img.title = data.alt;
         }
+
     } else {
         $(".loader").css("display", "none");
         $("#publisher").html("Error! Please try again.");

@@ -12,15 +12,15 @@ xkcd(function(data) {
     }
 });
 module.exports.getComic = function(returnRandomComic) {
-    let numComics = 2;
+    let numComics = 3;
     let selectedComic = getRandomIntInclusive(2, numComics);
     var comicObject = {};
     switch (selectedComic) {
         case 1:
             comicObject.publisher = "xkcd";
-            comicObject.publisherUrl = "https://xkcd.com/";
             let selectedXKCD = getRandomIntInclusive(1, latestComicNum);
             xkcd(selectedXKCD, function(data) {
+                comicObject.publisherUrl = "https://xkcd.com/" + selectedXKCD;
                 comicObject.img = data.img;
                 comicObject.title = data.safe_title;
                 comicObject.alt = data.alt;
@@ -29,13 +29,21 @@ module.exports.getComic = function(returnRandomComic) {
             break;
         case 2:
             comicObject.publisher = "Cyanide & Happiness";
-            comicObject.publisherUrl = "https://explosm.net/";
-            getCyanideAndHappiness(function(url, title) {
+            getCyanideAndHappiness(function(url, title, origUrl) {
                 comicObject.img = url;
                 comicObject.title = title;
+                comicObject.publisherUrl = origUrl;
                 returnRandomComic(comicObject);
             });
             break;
+        case 3:
+            comicObject.publisher = "Dilbert";
+            getDilbert(function(url, title, origUrl) {
+                comicObject.img = url;
+                comicObject.title = title;
+                comicObject.publisherUrl = origUrl;
+                returnRandomComic(comicObject);
+            });
     }
 };
 
@@ -46,10 +54,26 @@ function getCyanideAndHappiness(returnComic) {
         url: url
     }, function(err, res, body) {
         const $ = cheerio.load(body);
-        let url = $("#main-comic").attr('src');
-        console.log(url);
+        let comicUrl = $("#main-comic").attr('src');
         let title = $(".author-credit-name").text();
-        returnComic(url, title);
+        returnComic(comicUrl, title, res.request.uri.href);
+    });
+}
+
+function getDilbert(returnComic) {
+    var year = getRandomIntInclusive(1989, 2017);
+    var month = getRandomIntInclusive(1, 12);
+    //So that I don't have to deal with months with different nums, just limit to first 28 days
+    var day = getRandomIntInclusive(1, 28);
+    var url = 'http://dilbert.com/strip/' + year + '-' + month + '-' + day;
+    request({
+        url: url
+    }, function(err, res, body) {
+        const $ = cheerio.load(body);
+        let comic = $("img.img-comic");
+        let comicUrl = $(comic).attr('src');
+        let title = $(comic).attr('alt');
+        returnComic(comicUrl, title, url);
     });
 }
 
