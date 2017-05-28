@@ -1,4 +1,9 @@
 'use es6';
+// logging
+var dateFormat = require('dateformat');
+require('log-timestamp')(function() {
+    return '[' + dateFormat("m/d/yy HH:MM:ss Z") + '] %s';
+});
 
 var express = require('express');
 var bodyParser = require("body-parser");
