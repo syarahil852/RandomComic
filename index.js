@@ -17,14 +17,14 @@ app.enable('trust proxy');
 //Sets up important HTTP protocol settings
 api_wrapper(app);
 
-app.use('/RandomComic/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
-app.get("/RandomComic/", function(req, res) {
+app.get("/", function(req, res) {
     res.render("landing.ejs");
 });
 
 //Returns a JSON object containing the title, img url, original comic URL, and name of the comic
-app.post("/RandomComic/rand", function(req, res) {
+app.post("/rand", function(req, res) {
     var comic = generator.getComic(req.body.checked, function(comic) {
         res.send(comic);
         res.end();
