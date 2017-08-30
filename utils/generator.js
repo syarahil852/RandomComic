@@ -250,6 +250,11 @@ function generateInitNums() {
     request({
         url: abstruseurl
     }, function(err, res, body) {
+        if (err) {
+            console.log("Error loading abstruse goose");
+            latestComicAbstruse = 100;
+            return;
+        }
         const $ = cheerio.load(body);
         let title = $("body > section > h1 > a").attr('href');
         var parse_title = title.split('/');
