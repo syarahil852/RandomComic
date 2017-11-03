@@ -16,6 +16,9 @@ A simple node app to serve up a random comic from one of the following sources:
 
 <img src='http://i.imgur.com/6obDxmy.png' title='Random Comics' width='800'/>
 
+## Live Site
+
+The deployed demo can be found [here](https://jonlu.ca/RandomComic/)
 
 ## Contributing
 
