@@ -19,7 +19,7 @@ module.exports = function(app) {
     }));
     app.set("view engine", "ejs");
 
-    app.listen(8070, 'localhost', function() {
+    app.listen(8070, '0.0.0.0', function() {
         console.log("Listening on port 8070");
     });
 };
