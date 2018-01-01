@@ -169,6 +169,9 @@ function getSMBC(returnComic) {
             getSMBC(returnComic);
             return;
         }
+        if (comicUrl.startsWith("/")) {
+            comicUrl = "http://www.smbc-comics.com" + comicUrl;
+        }
         returnComic(comicUrl, title, res.request.uri.href);
     });
 }
