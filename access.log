@@ -1,0 +1,5 @@
+::1 - - [02/Jan/2018:09:44:15 +0000] "GET / HTTP/1.1" 500 1596 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36"
+::1 - - [02/Jan/2018:09:44:17 +0000] "GET /favicon.ico HTTP/1.1" 404 1286 "http://localhost:8070/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36"
+::1 - - [02/Jan/2018:09:44:26 +0000] "GET / HTTP/1.1" 200 4939 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36"
+::1 - - [02/Jan/2018:09:44:27 +0000] "POST /rand HTTP/1.1" 200 226 "http://localhost:8070/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36"
+::1 - - [02/Jan/2018:09:44:38 +0000] "POST /rand HTTP/1.1" 200 200 "http://localhost:8070/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36"
