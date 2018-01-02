@@ -46,7 +46,7 @@ function getNewImage() {
     });
     $.ajax({
         method: 'POST',
-        url: "/rand",
+        url: "rand",
         type: 'json',
         data: {
             checked: checkArray
