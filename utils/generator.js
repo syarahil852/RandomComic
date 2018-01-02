@@ -5,94 +5,90 @@ const debug = true;
 //fall back in case most recent check fails. This is the xkcd on 5/28/17
 var latestComicNumXkcd = 1842;
 var latestComicAbstruse = 575;
-
-
-//Sets the most recent comic indices for some comic sites. 
-//Commented for now so that nodemon doesn't run it every 5 seconds
+//Sets the most recent comic indices for some comic sites.
 generateInitNums();
-
-module.exports.getComic = function(comicsToSelectFrom, returnRandomComic) {
+module.exports.getComic = function (comicsToSelectFrom, returnRandomComic) {
     let numComics = 6;
     var selectedComic = getRandomIntInclusive(1, numComics);
-    var all_zero = true;
-    if (comicsToSelectFrom != undefined) {
-        for (var i = 0; i < comicsToSelectFrom.length; i++) {
-            if (comicsToSelectFrom[i] == 1) {
-                all_zero = false;
+    var allComicsAreZero = true;
+    if (comicsToSelectFrom) {
+        for (var comic of comicsToSelectFrom) {
+            if (comic) {
+                allComicsAreZero = false;
                 break;
             }
         }
-        if (!all_zero) {
+        if (!allComicsAreZero) {
             while (comicsToSelectFrom[selectedComic - 1] == 0) {
                 selectedComic = getRandomIntInclusive(1, numComics);
             }
         }
     }
-    var comicObject = {};
+    var comic = {};
     switch (selectedComic) {
         case 1:
-            comicObject.publisher = "xkcd";
+            comic.publisher = "xkcd";
             let selectedXKCD = getRandomIntInclusive(1, latestComicNumXkcd);
             //No dediated xkcd because there is a wrapper already
-            xkcd(selectedXKCD, function(data) {
-                comicObject.publisherUrl = "https://xkcd.com/" + selectedXKCD;
-                comicObject.img = data.img;
-                comicObject.title = data.safe_title;
-                comicObject.alt = data.alt;
-                returnRandomComic(comicObject);
+            xkcd(selectedXKCD, function (data) {
+                comic.publisherUrl = "https://xkcd.com/" + selectedXKCD;
+                comic.img = data.img;
+                comic.title = data.safe_title;
+                comic.alt = data.alt;
+                returnRandomComic(comic);
             });
             break;
         case 2:
-            comicObject.publisher = "Cyanide & Happiness";
-            getCyanideAndHappiness(function(url, title, origUrl) {
-                comicObject.img = url;
+            comic.publisher = "Cyanide & Happiness";
+            getCyanideAndHappiness(function (url, title, origUrl) {
+                comic.img = url;
                 title = title.capitalize();
-                comicObject.title = title;
-                comicObject.publisherUrl = origUrl;
-                returnRandomComic(comicObject);
+                comic.title = title;
+                comic.publisherUrl = origUrl;
+                returnRandomComic(comic);
             });
             break;
         case 3:
-            comicObject.publisher = "Dilbert";
-            getDilbert(function(url, title, origUrl) {
-                comicObject.img = url;
-                comicObject.title = title;
+            comic.publisher = "Dilbert";
+            getDilbert(function (url, title, origUrl) {
+                comic.img = url;
+                comic.title = title;
                 if (title === ' - Dilbert by Scott Adams') {
-                    comicObject.title = 'By Scott Adams';
+                    comic.title = 'By Scott Adams';
                 }
-                comicObject.publisherUrl = origUrl;
-                returnRandomComic(comicObject);
+                comic.publisherUrl = origUrl;
+                returnRandomComic(comic);
             });
             break;
         case 4:
-            comicObject.publisher = "SMBC";
-            getSMBC(function(url, title, origUrl) {
-                comicObject.img = url;
-                comicObject.title = title;
-                comicObject.publisherUrl = origUrl;
-                returnRandomComic(comicObject);
+            comic.publisher = "SMBC";
+            getSMBC(function (url, title, origUrl) {
+                comic.img = url;
+                comic.title = title;
+                comic.publisherUrl = origUrl;
+                returnRandomComic(comic);
             });
             break;
         case 5:
-            comicObject.publisher = "Penny Arcade";
-            getPennyArcade(function(url, title, origUrl) {
-                comicObject.img = url;
-                comicObject.title = title;
-                comicObject.publisherUrl = origUrl;
-                returnRandomComic(comicObject);
+            comic.publisher = "Penny Arcade";
+            getPennyArcade(function (url, title, origUrl) {
+                comic.img = url;
+                comic.title = title;
+                comic.publisherUrl = origUrl;
+                returnRandomComic(comic);
             });
             break;
         case 6:
-            comicObject.publisher = "Abstruse Goose";
-            getAbstruseGoose(function(url, title, origUrl, alt) {
-                comicObject.img = url;
-                comicObject.title = title;
-                comicObject.publisherUrl = origUrl;
+            comic.publisher = "Abstruse Goose";
+            getAbstruseGoose(function (url, title, origUrl, alt) {
+                comic.img = url;
+                comic.title = title;
+                comic.publisherUrl = origUrl;
                 //Alt text is sometimes there - if it exists, set it on the object
                 if (alt != undefined && alt != "") {
-                    comicObject.alt = alt;
+                    comic.alt = alt;
                 }
-                returnRandomComic(comicObject);
+                returnRandomComic(comic);
             });
             break;
     }
@@ -102,7 +98,7 @@ function getCyanideAndHappiness(returnComic) {
     var url = 'http://explosm.net/comics/random';
     request({
         url: url
-    }, function(err, res, body) {
+    }, function (err, res, body) {
         if (debug) {
             console.log(res.request.uri.href);
         }
@@ -128,15 +124,13 @@ function getDilbert(returnComic) {
         year = getRandomIntInclusive(1989, now.getFullYear());
         month = getRandomIntInclusive(1, 12);
         day = getRandomIntInclusive(1, 31);
-
         dateString = year + '-' + month + '-' + day;
         testDate = new Date(dateString);
     }
     var url = 'http://dilbert.com/strip/' + dateString;
-
     request({
         url: url
-    }, function(err, res, body) {
+    }, function (err, res, body) {
         if (debug) {
             console.log(res.request.uri.href);
         }
@@ -155,10 +149,9 @@ function getDilbert(returnComic) {
 
 function getSMBC(returnComic) {
     var url = 'http://www.smbc-comics.com/random.php';
-
     request({
         url: url
-    }, function(err, res, body) {
+    }, function (err, res, body) {
         if (debug) {
             console.log(res.request.uri.href);
         }
@@ -195,7 +188,7 @@ function getPennyArcade(returnComic) {
     var url = 'https://www.penny-arcade.com/comic/' + dateString;
     request({
         url: url
-    }, function(err, res, body) {
+    }, function (err, res, body) {
         if (debug) {
             console.log(res.request.uri.href);
         }
@@ -214,10 +207,9 @@ function getPennyArcade(returnComic) {
 function getAbstruseGoose(returnComic) {
     var randomComic = getRandomIntInclusive(1, 572);
     var url = 'http://abstrusegoose.com/' + randomComic;
-
     request({
         url: url
-    }, function(err, res, body) {
+    }, function (err, res, body) {
         if (debug) {
             console.log(res.request.uri.href);
         }
@@ -234,7 +226,6 @@ function getAbstruseGoose(returnComic) {
 }
 
 //Helpers
-
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -243,7 +234,7 @@ function getRandomIntInclusive(min, max) {
 
 function generateInitNums() {
     //Sets most recent XKCD on init
-    xkcd(function(data) {
+    xkcd(function (data) {
         if (data) {
             latestComicNumXkcd = data.num;
         }
@@ -252,7 +243,7 @@ function generateInitNums() {
     var abstruseurl = 'http://abstrusegoose.com/';
     request({
         url: abstruseurl
-    }, function(err, res, body) {
+    }, function (err, res, body) {
         if (err) {
             console.log("Error loading abstruse goose");
             latestComicAbstruse = 100;
@@ -266,16 +257,14 @@ function generateInitNums() {
 }
 
 //Redefinitions
-
 //To check for valid random dates
-Date.prototype.isValid = function() {
+Date.prototype.isValid = function () {
     // An invalid date object returns NaN for getTime() and NaN is the only
     // object not strictly equal to itself.
     return this.getTime() === this.getTime();
 };
-
 //To capitalize the first letter in a string
-String.prototype.capitalize = function() {
+String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
