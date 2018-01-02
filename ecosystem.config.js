@@ -7,7 +7,7 @@ module.exports = {
         // First application
         {
             name: 'RandomComic',
-            script: 'index.js',
+            script: 'bin/www',
             env: {
                 NODE_ENV: 'production'
             }
