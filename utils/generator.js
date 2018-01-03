@@ -180,7 +180,6 @@ function getPennyArcade(returnComic) {
     while (!testDate.isValid() || testDate > now || testDate.getDay() == 0 || testDate.getDay() == 6) {
         year = getRandomIntInclusive(1999, now.getFullYear());
         month = getRandomIntInclusive(1, 12);
-        //So that I don't have to deal with months with different nums, just limit to first 28 days
         day = getRandomIntInclusive(1, 31);
         dateString = year + '/' + month + '/' + day;
         testDate = new Date(dateString);
@@ -205,7 +204,7 @@ function getPennyArcade(returnComic) {
 }
 
 function getAbstruseGoose(returnComic) {
-    var randomComic = getRandomIntInclusive(1, 572);
+    var randomComic = getRandomIntInclusive(1, latestComicAbstruse);
     var url = 'http://abstrusegoose.com/' + randomComic;
     request({
         url: url
