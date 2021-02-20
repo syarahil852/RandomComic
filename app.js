@@ -20,7 +20,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(helmet({xssFilter: false}));
+app.use(helmet({xssFilter: false, contentSecurityPolicy: false}));
 var index = require('./routes/index');
 
 var fs = require('fs');
